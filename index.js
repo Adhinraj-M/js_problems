@@ -547,3 +547,113 @@ let classObj = {
 // console.log(StudentHighestPerSub(classObj,"Physics"))
 
 // 40.Write a function to find and print the student(s) with the lowest percentage of marks in a specific subject.
+
+// function studentLowestPerSub(classObj,sub){
+//   const maxMark = 50
+//   const studentNames = classObj.students.map(student=> student.name)
+//   const subjectFilter = classObj.students.map(student=>student.marks.filter(subMark=> subMark.subject === sub)).flat().map(item=>(item.mark/maxMark )* 100)
+//   const index = subjectFilter.indexOf(Math.min(...subjectFilter))
+//   return studentNames[index]
+
+// }
+
+// console.log(studentLowestPerSub(classObj,"English"))
+
+// 41.Write a function to find and print the subject(s) with the highest percentage of marks for a specific student.
+
+// function highestPerecentageStudent(classObj,studentName){
+//   const maxMark = 50
+//   const studnetMark = classObj.students.filter(student=>student.name === studentName)[0].marks
+//   const studentMarkPer = studnetMark.map(item=> (item.mark/maxMark)* 100)
+//   const subList = studnetMark.map(item=>item.subject)
+//   const index = studentMarkPer.indexOf(Math.max(...studentMarkPer))
+//   return subList[index]
+// }
+
+// console.log(highestPerecentageStudent(classObj,"Aju"))
+
+// 42.Write a function to find and print the subject(s) with the lowest percentage of marks for a specific student.
+
+// function highestPerecentageStudent(classObj,studentName){
+//   const maxMark = 50
+//   const studnetMark = classObj.students.filter(student=>student.name === studentName)[0].marks
+//   const studentMarkPer = studnetMark.map(item=> (item.mark/maxMark)* 100)
+//   const subList = studnetMark.map(item=>item.subject)
+//   const index = studentMarkPer.indexOf(Math.min(...studentMarkPer))
+//   return subList[index]
+// }
+
+// console.log(highestPerecentageStudent(classObj,"Binu"))
+
+// 43.Write a function to find and print the subject(s) in which all students scored above a certain mark.
+
+// function subAllScored(classObj,limit){
+//   const totalStudent = classObj.students.length
+//   const marks = classObj.students.map(student=>student.marks.filter(subMark=>subMark.mark >= limit)).flat()
+//   let subWithStdCount = {}
+//   for(const item of marks){
+//     subWithStdCount[item.subject] = (subWithStdCount[item.subject] || 0) + 1
+//   }
+//   const subWithLimit =[]
+//   for(const key in subWithStdCount ){
+//     if(subWithStdCount[key] === totalStudent){
+//       subWithLimit.push(key)
+//     }
+//   }
+  
+//   return subWithLimit
+// }
+
+// console.log(subAllScored(classObj,25))
+
+// 44.Write a function to find and print the subject(s) in which all students scored below a certain mark.
+
+// function subAllScoredBelowLimit(classObj,limit){
+//   const totalStudent = classObj.students.length
+//   const marks = classObj.students.map(student=>student.marks.filter((subMark)=>subMark.mark <= limit)).flat()
+//   let subWithStdCount = {}
+//   for(const item of marks){
+//     subWithStdCount[item.subject] = (subWithStdCount[item.subject] || 0) + 1
+//   }
+//   const subWithLimit =[]
+//   for(const key in subWithStdCount ){
+//     if(subWithStdCount[key] === totalStudent){
+//       subWithLimit.push(key)
+//     }
+//   }
+  
+//   return subWithLimit
+// }
+
+// console.log(subAllScoredBelowLimit(classObj,48))
+
+// 45.Write a function to find and print the subject(s) in which the average marks of all students are above a certain mark.
+
+function avgMarkAboveAvgLimit(classObj, limit) {
+  const noOfStudents = classObj.students.length;
+  const marksList = classObj.students.map((student) => student.marks).flat();
+  let totalMarkEachSub = {};
+  for (const item of marksList) {
+    if (!totalMarkEachSub[item.subject]) {
+      totalMarkEachSub[item.subject] = item.mark;
+    } else {
+      totalMarkEachSub[item.subject] =
+        totalMarkEachSub[item.subject] + item.mark;
+    }
+  }
+  let averageMarkEachSub = {};
+
+  for (const key in totalMarkEachSub) {
+    averageMarkEachSub[key] = totalMarkEachSub[key] / noOfStudents;
+  }
+  const avgWithLimit = Object.values(averageMarkEachSub).filter(
+    (item) => item >= limit
+  );
+  const marksAboveLimit = Object.entries(averageMarkEachSub)
+    .map((item) => avgWithLimit.map((mark) => mark === item[1] && item[0]))
+    .flat()
+    .filter((item) => item !== false);
+  return marksAboveLimit;
+}
+
+console.log(avgMarkAboveAvgLimit(classObj, 45));
