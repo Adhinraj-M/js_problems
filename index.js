@@ -629,31 +629,83 @@ let classObj = {
 
 // 45.Write a function to find and print the subject(s) in which the average marks of all students are above a certain mark.
 
-function avgMarkAboveAvgLimit(classObj, limit) {
-  const noOfStudents = classObj.students.length;
-  const marksList = classObj.students.map((student) => student.marks).flat();
-  let totalMarkEachSub = {};
-  for (const item of marksList) {
-    if (!totalMarkEachSub[item.subject]) {
-      totalMarkEachSub[item.subject] = item.mark;
-    } else {
-      totalMarkEachSub[item.subject] =
-        totalMarkEachSub[item.subject] + item.mark;
-    }
-  }
-  let averageMarkEachSub = {};
+// function avgMarkAboveAvgLimit(classObj, limit) {
+//   const noOfStudents = classObj.students.length;
+//   const marksList = classObj.students.map((student) => student.marks).flat();
+//   let totalMarkEachSub = {};
+//   for (const item of marksList) {
+//     if (!totalMarkEachSub[item.subject]) {
+//       totalMarkEachSub[item.subject] = item.mark;
+//     } else {
+//       totalMarkEachSub[item.subject] =
+//         totalMarkEachSub[item.subject] + item.mark;
+//     }
+//   }
+//   let averageMarkEachSub = {};
 
-  for (const key in totalMarkEachSub) {
-    averageMarkEachSub[key] = totalMarkEachSub[key] / noOfStudents;
-  }
-  const avgWithLimit = Object.values(averageMarkEachSub).filter(
-    (item) => item >= limit
-  );
-  const marksAboveLimit = Object.entries(averageMarkEachSub)
-    .map((item) => avgWithLimit.map((mark) => mark === item[1] && item[0]))
-    .flat()
-    .filter((item) => item !== false);
-  return marksAboveLimit;
+//   for (const key in totalMarkEachSub) {
+//     averageMarkEachSub[key] = totalMarkEachSub[key] / noOfStudents;
+//   }
+//   const avgWithLimit = Object.values(averageMarkEachSub).filter(
+//     (item) => item >= limit
+//   );
+//   const marksAboveLimit = Object.entries(averageMarkEachSub)
+//     .map((item) => avgWithLimit.map((mark) => mark === item[1] && item[0]))
+//     .flat()
+//     .filter((item) => item !== false);
+//   return marksAboveLimit;
+// }
+
+// console.log(avgMarkAboveAvgLimit(classObj, 45));
+
+// 46.Write a function to find and print the subject(s) in which the average marks of all students are below a certain mark.
+
+// function avgMarkBelowAvgLimit(classObj,limit){
+//   const noOfStudents = classObj.students.length
+//   const markList = classObj.students.map(student=>student.marks).flat()
+//   let totalMarkEachSub = {}
+//   for(const item of markList){
+//     if(!totalMarkEachSub[item.subject]){
+//       totalMarkEachSub[item.subject] = item.mark
+//     }
+//     else{
+//       totalMarkEachSub[item.subject] = totalMarkEachSub[item.subject] + item.mark
+//     }
+//   }
+
+//   let avgMarkEachSub ={}
+
+//   for(const key in totalMarkEachSub){
+//     avgMarkEachSub[key] = totalMarkEachSub[key]/noOfStudents
+//   }
+
+//   const avgMarkWithLimit = Object.values(avgMarkEachSub).filter(avgMark=>avgMark <= limit)
+
+//   const subBelowLimt = Object.entries(avgMarkEachSub).map(item=>avgMarkWithLimit.map(mark=>mark === item[1] && item[0])).flat().filter(item=>item !==false)
+
+//   return subBelowLimt
+  
+// }
+
+// console.log(avgMarkBelowAvgLimit(classObj,34))
+
+// 47.Write a function to find and print the student(s) who scored the highest marks in at least one subject.
+
+function studentWithHighestMarkAtleastOneSub(classObj){
+  const studentMark = classObj.students.map(student=>student.marks).flat()
+  const subject =classObj.students.map(student=>student.marks.map(subMark=>subMark.subject))
+  let markSubStd = {}
+  for(const item of studentMark){
+    if(!markSubStd[item.subject]){
+      markSubStd[item.subject] = []
+      markSubStd[item.subject] = markSubStd[item.subject].shift(item.mark)
+    }
+    else{
+      markSubStd[item.subject] = markSubStd[item.subject].push(item.mark)
+    }
+  }  
+
+  return subject
 }
 
-console.log(avgMarkAboveAvgLimit(classObj, 45));
+console.log(studentWithHighestMarkAtleastOneSub(classObj))
